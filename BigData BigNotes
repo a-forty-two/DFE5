@@ -1,0 +1,143 @@
+DL Name     Address    Age   Hobby
+12 John.    21 Baker   10.   Gardening
+11 Pikachu.  21 Baker. 42.   Baking 
+92 John.      88 Under.  10.  Gardening 
+10 Jane.    21 Baker     5.      Baking 
+Searching - Denormalized - Analytics 
+
+OLAP-> Online Analytical Process 
+
+RainFall               FlightLanding                 DimFlightDelays 
+1 Fact						Fact                                  7827.     18min
+2
+3
+Example: Big Data (starts from TBs- unto PBs…)
+Tools-> Warehouse (SQL DW (synapse), BigQuery..)
+
+Fact Tables-> contain info
+
+Dimensions are derived from Facts 
+
+DimCustomer, DimProduct….
+
+
+
+Normalization Steps
+
+1 NF: DEDUPLICATE -> primary key -> unique column 
+				DL-> PRIMARY Key
+2 NF: Anything that is duplicate and NOT directly related-> move to another table-> Address, Hobby
+DL Name AdressID Age HobbyID
+12 John.          1         10.   1
+11 Pikachu.     1..      42.   2 
+92 John.          2       10.  1 
+10 Jane.           1       5.      2 
+
+ID Address        ID Hobby 
+1 21 Baker         1     Gardening
+2 88 Under       2   Baking
+
+3 NF-> Everything NOT directly related-> DELETE IT from that table!
+				-> Create separate RELATIONSHIP tables!
+Person
+DL Name DOB 								Many->1                       1-> N hobbies
+12 John.    10.Dec1900					person_address        person_hobby
+11 Pikachu. 11Jan2042.                           12.  1                         12.  1
+92 John.      10. Feb300BC                      11.   1                         12   2
+10 Jane.       5. Feb 1100                           92.  2                         11.   2
+Address             Hobby                               10.   1                          10.   1
+ID Address        ID Hobby                                                               10.   2
+1 21 Baker         1     Gardening
+2 88 Under       2   Baking
+
+OLTP-> Online Transactional Process-> Azure SQL Server, Azure MySQL Server, VM-> installed SQL Server/MySQL 
+
+
+
+
+
+Small Data -> unto TBs
+Tools-> SQL Server, MySQL, Postgres
+
+Transaction- Editing/Insert - bad for searching 
+Int -> 32 bits the numbers, character-> 8 bits
+
+
+
+Big Data-> too big for 1 machines 
+
+1 machine can store= 2 numbers
+
+1,2,3 -> Big Data 
+
+Performance + Availability = 1
+
+INDEXING-> 
+OLTP/Small->   M1-> 1 and 2.         M2-> 3-> 4
+       (Replicate)   M3-> 1 and 2         M4-> 3-> 4
+
+ Sharding -> M1-> 1,2          M2-> 2,4           M3-> 4,1 
+OLAP
+
+1. Edit , 3 into 4-> OLTP
+2. Search -> 2 -> OLAP
+
+CosmosDB-> Azure 
+Strongest Performance —————— Highest Availability
+                      1          2             3           4                5
+
+
+DL Name AdressID 
+12 John.          1         
+11 Jane.    .     3     
+92 Tom.          2       
+10 Jane.           2   
+14 John.          3       
+81 Tom.    .     1..      
+82 Tom.         1      
+40 Tom.           2   
+
+Python—— c++.    Variable -> pointer 
+
+Pointers- pointer - pointer 
+
+Address ID—sorted = { 1:(12,81,82),2:(92,10,40),3:(11:14) }
+===. 1 1 1 2 2 2 3 3 => 1 3 2 3 3 2
+Compression 
+
+Every column-> own file [Dictionary Encoding]
+DL Name.          DL AddressID
+John:{12,14}           …
+Jane:{11,10}          .. 
+Tom:{92,81,82,40}
+
+3 files-> 1kb, 100kb, 1GB
+
+3 —      3kb, 300kb, 3GB [on RAM, and on Disk]
+            
+
+1 TB-> 60 seconds 
+100 MB-> 1 min 
+
+Hadoop -> OS -> Storage (parquet file format), some processing also—> [Data Lake] 
+
+In Memory Analysis Tool-> MapReduce 
+Apache Spark 
+
+Apache Hive ->  SQL Warehouse 
+
+Apache HBase -> NoSQL Warehouse 
+
+Building a stream -> Apache KAFKA
+
+Consuming infinite streams -> Apache Storm 
+
+
+
+
+
+
+
+
+
+
